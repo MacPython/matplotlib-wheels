@@ -27,6 +27,7 @@ function mpl_test {
     echo "pip $PIP_CMD"
 
     mkdir tmp_for_test
+    cd tmp_for_test
     echo "sanity checks"
     $PYTHON_EXE -c "import dateutil; print(dateutil.__version__)"
     $PYTHON_EXE -c "import sys; print('\n'.join(sys.path))"
