@@ -22,3 +22,4 @@ deploy:
     secure: PTlIH2hjQKw+pme9nCEs/KpjjmEHT5/G/jkjgglx22nWYnSr+zzs9yA803qEFnC/5qwoZN5dC/mgXZHLgFgmBCqpM5JP+FrAMTTVeDNfk6lWLq5QMdjZPtoJDjjVBqA0NJFSfWmrXzXVaNkNORBoKnL3JNI0C4gNpyVQRr2eqgQ=
   region: ORD
   container: wheels
+  skip_cleanup: true
