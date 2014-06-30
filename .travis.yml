@@ -18,7 +18,8 @@ install:
 script:
     - mpl_test
 
-before_deploy: cd matplotib/dist
+before_deploy: cd matplotlib/dist
+
 deploy:
   provider: cloudfiles
   username: travis-worker
