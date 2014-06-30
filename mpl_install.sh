@@ -2,6 +2,8 @@
 
 function mpl_build_install {
     check_var $BUILD_PREFIX
+    check_var $SYS_CC
+    check_var $SYS_CXX
     cd matplotlib
     cat << EOF > setup.cfg
 [directories]
@@ -9,7 +11,8 @@ function mpl_build_install {
 # This can be a single directory or a comma-delimited list of directories.
 basedirlist = $BUILD_PREFIX, /usr
 EOF
-    python setup.py bdist_wheel
+    CC=${SYS_CC} CXX=${SYS_CXX} python setup.py bdist_wheel
+    require_success "Matplotlib build failed"
     delocate-wheel dist/*.whl
     rename_wheels dist/*.whl
     pip install dist/*.whl
