@@ -1,0 +1,29 @@
+language:
+  - objective-c
+
+env:
+  matrix:
+    - VERSION=2.7.7 NUMPY_VERSION=1.6.0
+    - VERSION=3.3.5 NUMPY_VERSION=1.7.1
+    - VERSION=3.4.1 NUMPY_VERSION=1.7.1
+
+install:
+    - source run_install.sh
+    - get_python_environment macpython $VERSION venv
+    - pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
+    - pip install delocate
+    - source mpl_install.sh
+    - mpl_build_install
+
+script:
+    - mpl_test
+
+before_deploy: cd matplotib/dist
+deploy:
+  provider: cloudfiles
+  username: travis-worker
+  api_key:
+    secure: ZcwPFUNQlkSXqy7QRbgJsDwK0feE5ju3ISEbYcjl+zG/C8h/vZVOJpoG4PaeOrTRb2k4VaG/zPM4mN1JJKo4qR4c4X4hHY+sPldiD86ubT0tOPD6Mrm9xgu3KBOIg7OO5uiS6VppGkS/G/zfmMiFl97nxfwp9ecsXdKRieiw2kI=
+  region: ORD
+  container: wheels
+  skip_cleanup: true

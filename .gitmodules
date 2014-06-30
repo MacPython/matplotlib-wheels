@@ -1,0 +1,6 @@
+[submodule "matplotlib"]
+	path = matplotlib
+	url = git://github.com/matplotlib/matplotlib.git
+[submodule "terryfy"]
+	path = terryfy
+	url = git://github.com/matthew-brett/terryfy.git

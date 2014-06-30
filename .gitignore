@@ -1,0 +1,7 @@
+*.pyc
+*.swp
+*~
+build
+working
+downloads
+venv
