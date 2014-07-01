@@ -5,13 +5,10 @@
 source terryfy/travis_tools.sh
 
 # Package versions for fresh source builds
-FT_VERSION="2.5.3"
-PNG_VERSION="1.6.12"
-JPEG_VERSION=9a
-OPENJPEG_VERSION=2.0.0
-TIFF_VERSION=4.0.3
-LCMS_VERSION=2.6
-WEBP_VERSION=0.4.0
+FT_VERSION=2.5.3
+PNG_VERSION=1.6.12
+ZLIB_VERSION=1.2.8
+
 
 # Compiler defaults
 SYS_CC=clang
@@ -56,53 +53,18 @@ function clean_builds {
 }
 
 
-function install_jpeg {
-    check_var $JPEG_VERSION
+function install_zlib {
+    check_var $ZLIB_VERSION
     check_var $SRC_PREFIX
     check_var $BUILD_PREFIX
-    local archive_path="archives/jpegsrc.v${JPEG_VERSION}.tar.gz"
-    tar zxvf $archive_path -C $SRC_PREFIX
-    cd $SRC_PREFIX/jpeg-$JPEG_VERSION
-    require_success "Failed to cd to jpeg directory"
+    local archive_path="archives/zlib-${ZLIB_VERSION}.tar.xz"
+    tar xvf $archive_path -C $SRC_PREFIX
+    cd $SRC_PREFIX/zlib-$ZLIB_VERSION
+    require_success "Failed to cd to zlib directory"
     CC=${SYS_CC} CXX=${SYS_CXX} CFLAGS=$ARCH_FLAGS ./configure --prefix=$BUILD_PREFIX
     make
     make install
-    require_success "Failed to install jpeg $version"
-    cd ../..
-}
-
-
-function install_openjpeg {
-    check_var $OPENJPEG_VERSION
-    check_var $SRC_PREFIX
-    check_var $BUILD_PREFIX
-    local archive_path="archives/openjpeg-${OPENJPEG_VERSION}.tar.gz"
-    tar zxvf $archive_path -C $SRC_PREFIX
-    cd $SRC_PREFIX/openjpeg-$OPENJPEG_VERSION
-    require_success "Failed to cd to openjpeg directory"
-    CC=${SYS_CC} CXX=${SYS_CXX} CFLAGS=$ARCH_FLAGS \
-        CMAKE_INCLUDE_PATH=$CPATH \
-        CMAKE_LIBRARY_PATH=$LIBRARY_PATH \
-        cmake -DCMAKE_INSTALL_PREFIX:PATH=$BUILD_PREFIX .
-    make
-    make install
-    require_success "Failed to install openjpeg $version"
-    cd ../..
-}
-
-
-function install_tiff {
-    check_var $TIFF_VERSION
-    check_var $SRC_PREFIX
-    check_var $BUILD_PREFIX
-    local archive_path="archives/tiff-${TIFF_VERSION}.tar.gz"
-    tar zxvf $archive_path -C $SRC_PREFIX
-    cd $SRC_PREFIX/tiff-$TIFF_VERSION
-    require_success "Failed to cd to tiff directory"
-    CC=${SYS_CC} CXX=${SYS_CXX} CFLAGS=$ARCH_FLAGS ./configure --prefix=$BUILD_PREFIX
-    make
-    make install
-    require_success "Failed to install tiff $version"
+    require_success "Failed to install zlib $version"
     cd ../..
 }
 
@@ -137,40 +99,5 @@ function install_freetype {
     make
     make install
     require_success "Failed to install freetype $version"
-    cd ../..
-}
-
-
-function install_lcms2 {
-    check_var $LCMS_VERSION
-    check_var $SRC_PREFIX
-    check_var $BUILD_PREFIX
-    local archive_path="archives/lcms2-${LCMS_VERSION}.tar.gz"
-    tar zxvf $archive_path -C $SRC_PREFIX
-    cd $SRC_PREFIX/lcms2-$LCMS_VERSION
-    require_success "Failed to cd to lcms2 directory"
-    CC=${SYS_CC} CXX=${SYS_CXX} CFLAGS=$ARCH_FLAGS ./configure --prefix=$BUILD_PREFIX
-    make
-    make install
-    require_success "Failed to install lcms $version"
-    cd ../..
-}
-
-
-function install_webp {
-    check_var $WEBP_VERSION
-    check_var $SRC_PREFIX
-    check_var $BUILD_PREFIX
-    local archive_path="archives/libwebp-${WEBP_VERSION}.tar.gz"
-    tar zxvf $archive_path -C $SRC_PREFIX
-    cd $SRC_PREFIX/libwebp-$WEBP_VERSION
-    require_success "Failed to cd to libwebp directory"
-    CC=${SYS_CC} CXX=${SYS_CXX} CFLAGS=$ARCH_FLAGS ./configure \
-        --enable-libwebpmux \
-        --enable-libwebpdemux \
-        --prefix=$BUILD_PREFIX
-    make
-    make install
-    require_success "Failed to install webp $version"
     cd ../..
 }
