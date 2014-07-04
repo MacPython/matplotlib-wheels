@@ -1,14 +1,18 @@
 source terryfy/travis_tools.sh
-source library_installers.sh
+source terryfy/library_installers.sh
+
+# Package versions for fresh source builds
+FT_VERSION=2.5.3
+PNG_VERSION=1.6.12
+ZLIB_VERSION=1.2.8
 
 # Need cmake for openjpeg
 brew install cmake
 # Need pkg-config for freetype to find libpng
 brew install pkg-config
 # Set up build
-init_vars
 clean_builds
 # Need zlib for compatibility with new libpng on OSX 10.6
-install_zlib
-install_libpng
-install_freetype
+standard_install zlib $ZLIB_VERSION .tar.xz
+standard_install libpng $PNG_VERSION
+standard_install freetype $FT_VERSION .tar.gz freetype- "--with-harfbuzz=no"
