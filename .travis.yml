@@ -1,6 +1,7 @@
 language:
 - objective-c
 env:
+  global: LATEST_TAG=1
   matrix:
   - VERSION=2.7.7 NUMPY_VERSION=1.5.1
   - VERSION=3.3.5 NUMPY_VERSION=1.7.1
@@ -10,6 +11,7 @@ install:
 - get_python_environment macpython $VERSION venv
 - pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
 - pip install delocate
+- if [ -n "$LATEST_TAG" ]; then checkout_closest_tag matplotlib; fi
 - source mpl_install.sh
 - mpl_build_install
 script:
