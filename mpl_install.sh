@@ -4,6 +4,7 @@ function mpl_build_install {
     check_var $BUILD_PREFIX
     check_var $SYS_CC
     check_var $SYS_CXX
+    check_var $PYTHON_EXE
     cd matplotlib
     cat << EOF > setup.cfg
 [directories]
@@ -13,7 +14,8 @@ basedirlist = $BUILD_PREFIX, /usr
 EOF
     CC=${SYS_CC} CXX=${SYS_CXX} python setup.py bdist_wheel
     require_success "Matplotlib build failed"
-    delocate-wheel dist/*.whl
+    $PYTHON_EXE ../mpl_delocate.py dist/*.whl
+    require_success "Wheel delocation failed"
     rename_wheels dist/*.whl
     pip install dist/*.whl
     cd ..
