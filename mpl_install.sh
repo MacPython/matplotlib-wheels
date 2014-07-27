@@ -36,8 +36,10 @@ function mpl_test {
     $PYTHON_EXE -c "import matplotlib; print(matplotlib.__file__)"
     $PYTHON_EXE -c "from matplotlib import font_manager"
 
-    echo "testing matplotlib using 8 processess"
-    $PYTHON_EXE ../matplotlib/tests.py -sv --processes=8 --process-timeout=300
+    echo "testing matplotlib using 1 process"
+    # Exclude known fail on Python 3.4
+    # https://github.com/matplotlib/matplotlib/pull/2981
+    $PYTHON_EXE ../matplotlib/tests.py -sv -e test_override_builtins
     require_success "Testing matplotlib returned non-zero status"
     $PYTHON_EXE ../check_tcl.py
     require_success "MPL seems not to be linked to activestate tcl / tk"
