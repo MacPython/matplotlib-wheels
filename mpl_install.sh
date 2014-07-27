@@ -36,5 +36,8 @@ function mpl_test {
 
     echo "testing matplotlib using 8 processess"
     $PYTHON_EXE ../matplotlib/tests.py -sv --processes=8 --process-timeout=300
+    require_success "Testing matplotlib returned non-zero status"
+    $PYTHON_EXE ../check_tcl.py
+    require_success "MPL seems not to be linked to activestate tcl / tk"
     cd ..
 }
