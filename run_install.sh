@@ -15,6 +15,8 @@ function install_activestate_tcl {
     check_var $TCL_URL
     check_var $TCL_VERSION
     check_var $TCL_DMG
+    check_var $DOWNLOADS_SDIR
+    mkdir -p $DOWNLOADS_SDIR
     local dmg_path=$DOWNLOADS_SDIR/$TCL_DMG
     curl $TCL_URL/$TCL_VERSION/$TCL_DMG > $dmg_path
     require_success "Failed to download tcl/tk"
