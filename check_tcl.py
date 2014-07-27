@@ -14,4 +14,5 @@ import matplotlib.backends._tkagg as tka
 required_line = b"/Library/Frameworks/Tcl.framework/Versions/8.5/Tcl (compatibility version 8.5.0, current version 8.5.15)"
 
 install_names = check_output(['otool', '-L', tka.__file__])
+print(install_names)
 sys.exit(required_line not in install_names)
