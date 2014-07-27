@@ -7,6 +7,9 @@ env:
   - VERSION=3.3.5 NUMPY_VERSION=1.7.1
   - VERSION=3.4.1 NUMPY_VERSION=1.7.1
 install:
+# increase number of open files allowed for tests
+# https://github.com/matplotlib/matplotlib/issues/3315
+- ulimit -n 4096
 - source run_install.sh
 - get_python_environment macpython $VERSION venv
 - pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
