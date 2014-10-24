@@ -16,7 +16,7 @@ EOF
     require_success "Matplotlib build failed"
     $PYTHON_EXE ../mpl_delocate.py dist/*.whl
     require_success "Wheel delocation failed"
-    delocate-add-platforms --rm-orig -x 10_9 -x 10_10 dist/*.whl
+    delocate-addplat --rm-orig -x 10_9 -x 10_10 dist/*.whl
     pip install dist/*.whl
     cd ..
 }
