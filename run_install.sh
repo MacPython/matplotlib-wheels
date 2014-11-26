@@ -7,8 +7,8 @@ PNG_VERSION=1.6.12
 ZLIB_VERSION=1.2.8
 
 TCL_URL=http://downloads.activestate.com/ActiveTcl/releases
-TCL_VERSION=8.5.15.0
-TCL_DMG=ActiveTcl8.5.15.1.297588-macosx10.5-i386-x86_64-threaded.dmg
+TCL_VERSION=8.5.17.0
+TCL_DMG=ActiveTcl8.5.17.0.298612-macosx10.5-i386-x86_64-threaded.dmg
 
 
 function install_activestate_tcl {
