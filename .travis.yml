@@ -2,7 +2,7 @@ language:
 - objective-c
 env:
   global:
-    - LATEST_TAG=1
+    # - LATEST_TAG=1
     - FT_VERSION=2.5.3
     - PNG_VERSION=1.6.12
     - ZLIB_VERSION=1.2.8
