@@ -26,6 +26,10 @@ install:
 - source mpl_install.sh
 - mpl_build_install
 script:
+# Fix numpy ast errors in tests by upgrading numpy
+- if [ -n "$(pyver_ge $VERSION 3.4.0)" ]; then
+  pip install --upgrade numpy;
+  fi
 - mpl_test
 before_deploy: cd matplotlib/dist
 deploy:
