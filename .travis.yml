@@ -2,7 +2,7 @@ language:
 - objective-c
 env:
   global:
-    - LATEST_TAG=1
+    - MPL_COMMIT=latest-tag
     - FT_VERSION=2.5.3
     - PNG_VERSION=1.6.12
     - ZLIB_VERSION=1.2.8
@@ -22,7 +22,9 @@ install:
 - get_python_environment macpython $VERSION venv
 - pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
 - pip install delocate
-- if [ -n "$LATEST_TAG" ]; then checkout_closest_tag matplotlib; fi
+- if [ -n "$MPL_COMMIT" ]; then
+      checkout_commit matplotlib $MPL_COMMIT;
+  fi
 - source mpl_install.sh
 - mpl_build_install
 script:
