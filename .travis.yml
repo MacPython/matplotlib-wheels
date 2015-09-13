@@ -2,7 +2,8 @@ language:
 - objective-c
 env:
   global:
-    - MPL_COMMIT=latest-tag
+    - BUILD_COMMIT=latest-tag
+    - REPO_DIR=matplotlib
     - FT_VERSION=2.5.3
     - PNG_VERSION=1.6.12
     - ZLIB_VERSION=1.2.8
@@ -11,19 +12,20 @@ env:
     - TCL_VERSION=8.5.17.0
     - TCL_DMG=ActiveTcl8.5.17.0.298612-macosx10.5-i386-x86_64-threaded.dmg
   matrix:
-  - VERSION=2.7.9 NUMPY_VERSION=1.6.1
+  - VERSION=2.7.10 NUMPY_VERSION=1.6.1
   - VERSION=3.3.5 NUMPY_VERSION=1.7.1
-  - VERSION=3.4.2 NUMPY_VERSION=1.7.1
+  - VERSION=3.4.3 NUMPY_VERSION=1.7.1
+  - VERSION=3.5.0 NUMPY_VERSION=1.7.1
 install:
 # increase number of open files allowed for tests
 # https://github.com/matplotlib/matplotlib/issues/3315
 - ulimit -n 4096
 - source run_install.sh
 - get_python_environment macpython $VERSION venv
-- pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
+- pip install numpy==$NUMPY_VERSION
 - pip install delocate
-- if [ -n "$MPL_COMMIT" ]; then
-      checkout_commit matplotlib $MPL_COMMIT;
+- if [ -n "$BUILD_COMMIT" ]; then
+      checkout_commit $REPO_DIR $MPL_COMMIT;
   fi
 - source mpl_install.sh
 - mpl_build_install
@@ -33,7 +35,10 @@ script:
   pip install --upgrade numpy;
   fi
 - mpl_test
-before_deploy: cd matplotlib/dist
+before_deploy:
+  - cd $REPO_DIR/dist
+  # Fix for https://github.com/travis-ci/travis-ci/issues/4635
+  - rvm 1.9.3 do gem install net-ssh -v 2.9.2
 deploy:
   provider: cloudfiles
   username: travis-worker
