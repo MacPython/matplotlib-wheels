@@ -1,6 +1,11 @@
 source terryfy/travis_tools.sh
 source terryfy/library_installers.sh
 
+# Prevent DYLD_LIBRARY_PATH hijacking system libs
+export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_LIBRARY_PATH
+unset DYLD_LIBRARY_PATH
+
+
 function install_activestate_tcl {
     check_var $TCL_URL
     check_var $TCL_VERSION
@@ -10,12 +15,10 @@ function install_activestate_tcl {
     local dmg_path=$DOWNLOADS_SDIR/$TCL_DMG
     curl $TCL_URL/$TCL_VERSION/$TCL_DMG > $dmg_path
     require_success "Failed to download tcl/tk"
-    echo $dmg_path
-    ls -al $dmg_path
     sudo hdiutil attach $dmg_path -mountpoint /Volumes/Tcl
     sudo installer -pkg /Volumes/Tcl/ActiveTcl-8.5.pkg -target /
     require_success "Failed to install tcl/tk"
-    hdiutil unmount /Volumes/Tcl
+    sudo hdiutil unmount /Volumes/Tcl
 }
 
 # Need pkg-config for freetype to find libpng
