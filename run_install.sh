@@ -15,10 +15,10 @@ function install_activestate_tcl {
     local dmg_path=$DOWNLOADS_SDIR/$TCL_DMG
     curl $TCL_URL/$TCL_VERSION/$TCL_DMG > $dmg_path
     require_success "Failed to download tcl/tk"
-    sudo hdiutil attach $dmg_path -mountpoint /Volumes/Tcl
+    hdiutil attach $dmg_path -mountpoint /Volumes/Tcl
     sudo installer -pkg /Volumes/Tcl/ActiveTcl-8.5.pkg -target /
     require_success "Failed to install tcl/tk"
-    sudo hdiutil unmount /Volumes/Tcl
+    hdiutil unmount /Volumes/Tcl
 }
 
 # Need pkg-config for freetype to find libpng
