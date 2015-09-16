@@ -38,6 +38,7 @@ script:
 - if [ -n "$(pyver_ge $VERSION 3.4.0)" ]; then
   pip install --upgrade numpy;
   fi
+- pip install nose mock
 - mpl_test
 before_deploy:
   - cd $REPO_DIR/dist
