@@ -10,7 +10,9 @@ function install_activestate_tcl {
     local dmg_path=$DOWNLOADS_SDIR/$TCL_DMG
     curl $TCL_URL/$TCL_VERSION/$TCL_DMG > $dmg_path
     require_success "Failed to download tcl/tk"
-    hdiutil attach $dmg_path -mountpoint /Volumes/Tcl
+    echo $dmg_path
+    ls -al $dmg_path
+    sudo hdiutil attach $dmg_path -mountpoint /Volumes/Tcl
     sudo installer -pkg /Volumes/Tcl/ActiveTcl-8.5.pkg -target /
     require_success "Failed to install tcl/tk"
     hdiutil unmount /Volumes/Tcl
