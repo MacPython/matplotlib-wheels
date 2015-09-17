@@ -23,9 +23,9 @@ install:
 - ulimit -n 4096
 - source run_install.sh
 - get_python_environment macpython $VERSION venv
-# Install patched wheel for Python 3.5
-- pip install --no-index -f $NIPY_WHEEL_URL numpy==$NUMPY_VERSION
 - pip install delocate
+# Update to latest wheel package for Python 3.5
+- pip install -U wheel
 - if [ -n "$BUILD_COMMIT" ]; then
       checkout_commit $REPO_DIR $MPL_COMMIT;
   fi
