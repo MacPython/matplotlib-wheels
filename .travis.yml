@@ -26,8 +26,6 @@ install:
 # Install patched wheel for Python 3.5
 - pip install --no-index -f $NIPY_WHEEL_URL numpy==$NUMPY_VERSION
 - pip install delocate
-# Install patched version of wheel (patched for 3.5)
-- pip install --ignore-installed --no-index -f $NIPY_WHEEL_URL wheel
 - if [ -n "$BUILD_COMMIT" ]; then
       checkout_commit $REPO_DIR $MPL_COMMIT;
   fi

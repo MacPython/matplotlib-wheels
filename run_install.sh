@@ -1,10 +1,6 @@
 source terryfy/travis_tools.sh
 source terryfy/library_installers.sh
 
-# Prevent DYLD_LIBRARY_PATH hijacking system libs
-export DYLD_FALLBACK_LIBRARY_PATH=$DYLD_LIBRARY_PATH
-unset DYLD_LIBRARY_PATH
-
 
 function install_activestate_tcl {
     check_var $TCL_URL
