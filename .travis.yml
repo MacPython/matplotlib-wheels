@@ -27,7 +27,7 @@ install:
 # Update to latest wheel package for Python 3.5
 - pip install -U wheel
 - if [ -n "$BUILD_COMMIT" ]; then
-      checkout_commit $REPO_DIR $MPL_COMMIT;
+      checkout_commit $REPO_DIR $BUILD_COMMIT;
   fi
 - source mpl_install.sh
 - mpl_build_install
