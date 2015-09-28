@@ -2,7 +2,7 @@ language:
 - objective-c
 env:
   global:
-    - BUILD_COMMIT=latest-tag
+    - BUILD_COMMIT=v1.4.3
     - REPO_DIR=matplotlib
     - NIPY_WHEEL_URL=https://nipy.bic.berkeley.edu/scipy_installers
     - FT_VERSION=2.5.3
@@ -13,10 +13,10 @@ env:
     - TCL_VERSION=8.5.18.0
     - TCL_DMG=ActiveTcl8.5.18.0.298892-macosx10.5-i386-x86_64-threaded.dmg
   matrix:
-  - VERSION=2.7.10 NUMPY_VERSION=1.7.1
-  - VERSION=3.3.5 NUMPY_VERSION=1.7.1
-  - VERSION=3.4.3 NUMPY_VERSION=1.7.1
-  - VERSION=3.5.0 NUMPY_VERSION=1.9.2
+      #- VERSION=2.7.10 NUMPY_VERSION=1.7.1
+      #- VERSION=3.3.5 NUMPY_VERSION=1.7.1
+      #- VERSION=3.4.3 NUMPY_VERSION=1.7.1
+  - VERSION=3.5.0 NUMPY_VERSION=1.7.1
 install:
 # increase number of open files allowed for tests
 # https://github.com/matplotlib/matplotlib/issues/3315
