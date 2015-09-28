@@ -37,7 +37,7 @@ script:
   pip install --upgrade numpy;
   fi
 - pip install nose mock
-- mpl_test
+  # - mpl_test
 before_deploy:
   - cd $REPO_DIR/dist
   # Fix for https://github.com/travis-ci/travis-ci/issues/4635
