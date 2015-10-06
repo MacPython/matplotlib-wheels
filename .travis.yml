@@ -24,6 +24,8 @@ install:
 - source run_install.sh
 - get_python_environment macpython $VERSION venv
 - pip install delocate
+# Allow nipy wheelhouse for Python 3.5 wheel
+- pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
 # Update to latest wheel package for Python 3.5
 - pip install -U wheel
 - if [ -n "$BUILD_COMMIT" ]; then
