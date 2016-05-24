@@ -38,7 +38,7 @@ install:
 script:
 # Fix numpy ast errors in tests by upgrading numpy
 - if [ -n "$(pyver_ge $VERSION 3.4.0)" ]; then
-  pip install numpy==1.10.4;  # pin to avoid 1.5.x test failures
+  pip install numpy==1.10.4;
   fi
 - pip install nose mock sphinx
 - install_activestate_tcl
