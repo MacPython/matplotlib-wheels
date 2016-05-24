@@ -2,7 +2,8 @@ language:
 - objective-c
 env:
   global:
-    - BUILD_COMMIT=latest-tag
+      #- BUILD_COMMIT=latest-tag
+    - BUILD_COMMIT=pr/6442
     - REPO_DIR=matplotlib
     - NIPY_WHEEL_URL=https://nipy.bic.berkeley.edu/scipy_installers
     - FT_VERSION=2.5.3
@@ -28,6 +29,8 @@ install:
 - pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
 # Update to latest wheel package for Python 3.5
 - pip install -U wheel
+# Get branch to test
+- (cd $REPO_DIR && git fetch origin pull/6442/head:${BUILD_COMMIT})
 - if [ -n "$BUILD_COMMIT" ]; then
       checkout_commit $REPO_DIR $BUILD_COMMIT;
   fi
@@ -38,8 +41,10 @@ script:
 - if [ -n "$(pyver_ge $VERSION 3.4.0)" ]; then
   pip install --upgrade numpy;
   fi
-- pip install nose mock
-  # - mpl_test
+- pip install nose mock sphinx
+- install_activestate_tcl
+- MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
+- mpl_test
 before_deploy:
   - cd $REPO_DIR/dist
 deploy:

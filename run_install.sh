@@ -29,6 +29,3 @@ check_var $PNG_VERSION
 standard_install libpng $PNG_VERSION
 check_var $FT_VERSION
 standard_install freetype $FT_VERSION .tar.gz freetype- "--with-harfbuzz=no"
-# Need activestate tcl for compatibility with macpython osx install
-# instructions
-install_activestate_tcl
