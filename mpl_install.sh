@@ -14,6 +14,7 @@ basedirlist = $BUILD_PREFIX, /usr
 EOF
     CC=${SYS_CC} CXX=${SYS_CXX} python setup.py bdist_wheel
     require_success "Matplotlib build failed"
+    delocate-listdeps dist/*.whl # lists library dependencies
     delocate-wheel dist/*.whl # copies library dependencies into wheel
     require_success "Wheel delocation failed"
     delocate-addplat --rm-orig -x 10_9 -x 10_10 dist/*.whl
@@ -41,7 +42,5 @@ function mpl_test {
     # https://github.com/matplotlib/matplotlib/pull/2981
     $PYTHON_EXE ../matplotlib/tests.py -sv -e test_override_builtins
     require_success "Testing matplotlib returned non-zero status"
-    $PYTHON_EXE ../check_tcl.py
-    require_success "MPL seems not to be linked to activestate tcl / tk"
     cd ..
 }
