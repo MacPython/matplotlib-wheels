@@ -72,7 +72,7 @@ matrix:
         - NP_BUILD_DEP="1.9.3"
 
 before_install:
-    - BUILD_DEPENDS="$NP_BUILD_DEP"
+    - BUILD_DEPENDS="numpy==$NP_BUILD_DEP"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
