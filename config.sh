@@ -1,5 +1,5 @@
 # Define custom utilities
-IS_OSX=$([ "$TRAVIS_OS_NAME" == "osx" ] && echo true)
+if [ "$TRAVIS_OS_NAME" == "osx" ]; then IS_OSX=1; fi
 
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
