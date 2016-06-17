@@ -1,5 +1,5 @@
 # Define custom utilities
-if [ "$TRAVIS_OS_NAME" == "osx" ]; then IS_OSX=1; fi
+# Test for OSX with [ -n "$IS_OSX" ]
 
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
@@ -11,7 +11,7 @@ function pre_build {
     fi
     # Use local freetype for versions which support it
     export MPLLOCALFREETYPE=1
-    source multibuild/docker_lib_builders.sh
+    source multibuild/library_builders.sh
     build_jpeg
     build_libpng
     build_bzip2
