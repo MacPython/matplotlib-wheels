@@ -1,53 +1,97 @@
-language:
-- objective-c
 env:
-  global:
-    - BUILD_COMMIT=latest-tag
-    - REPO_DIR=matplotlib
-    - NIPY_WHEEL_URL=https://nipy.bic.berkeley.edu/scipy_installers
-    - FT_VERSION=2.5.3
-    - PNG_VERSION=1.6.12
-    - ZLIB_VERSION=1.2.8
-    - TCL_URL=http://downloads.activestate.com/ActiveTcl/releases
-    # Need to check these last two from time to time
-    - TCL_VERSION=8.5.18.0
-    - TCL_DMG=ActiveTcl8.5.18.0.298892-macosx10.5-i386-x86_64-threaded.dmg
-  matrix:
-    - VERSION=2.7.10 NUMPY_VERSION=1.7.1
-    - VERSION=3.4.3 NUMPY_VERSION=1.7.1
-    - VERSION=3.5.0 NUMPY_VERSION=1.7.1
+    global:
+        - REPO_DIR=matplotlib
+        - BUILD_COMMIT=v2.0.0b1
+        - BUILD_DEPENDS=
+        - TEST_DEPENDS="numpy==1.11.0 nose mock sphinx"
+        - PLAT=x86_64
+        - UNICODE_WIDTH=32
+        - NP_BUILD_DEP=1.6.2
+        # Needed for Python 3.5 numpy wheels on OSX (as well as manylinux
+        # wheels) (see https://github.com/numpy/numpy/issues/7755)
+        - MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
+        - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
+        # Following generated with
+        # travis encrypt -r MacPython/matplotlib-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
+        - secure:
+            "hKf07zeIRvEMH9qWUkkmFHu768HZdI+EOCO99KjsAjbwa7QdUSwZ9XZKCcyNiym5iyrIBWHywyEtO0wk/LsTxhNZGZQP0nJbyTSSy4VGMQmpIx1sVmDKtrykVJaxCfXqpYYDttBTC4TyvxW/3LyuqBfbU14R4uoSFY/mK+QIJ0A="
+
+language: python
+sudo: required
+dist: trusty
+services: docker
+
+matrix:
+  include:
+    - os: linux
+      python: 2.7
+    - os: linux
+      python: 2.7
+      env:
+        - UNICODE_WIDTH=16
+    - os: linux
+      python: 2.7
+      env:
+        - PLAT=i686
+    - os: linux
+      python: 2.7
+      env:
+        - PLAT=i686
+        - UNICODE_WIDTH=16
+    - os: linux
+      python: 3.4
+      env:
+        - NP_BUILD_DEP="1.7.2"
+    - os: linux
+      python: 3.4
+      env:
+        - PLAT=i686
+        - NP_BUILD_DEP="1.7.2"
+    - os: linux
+      python: 3.5
+      env:
+        - NP_BUILD_DEP="1.9.3"
+    - os: linux
+      python: 3.5
+      env:
+        - PLAT=i686
+        - NP_BUILD_DEP="1.9.3"
+    - os: osx
+      language: objective-c
+      env:
+        - TRAVIS_PYTHON_VERSION=2.7
+    - os: osx
+      language: objective-c
+      env:
+        - TRAVIS_PYTHON_VERSION=3.4
+        - NP_BUILD_DEP="1.7.2"
+    - os: osx
+      language: objective-c
+      env:
+        - TRAVIS_PYTHON_VERSION=3.5
+        - NP_BUILD_DEP="1.9.3"
+
+before_install:
+    - BUILD_DEPENDS="$NP_BUILD_DEP"
+    - source multibuild/common_utils.sh
+    - source multibuild/travis_steps.sh
+    - before_install
+
 install:
-# increase number of open files allowed for tests
-# https://github.com/matplotlib/matplotlib/issues/3315
-- ulimit -n 4096
-- source run_install.sh
-- get_python_environment macpython $VERSION venv
-- pip install delocate
-# Allow nipy wheelhouse for Python 3.5 wheel
-- pip install -f $NIPY_WHEELHOUSE numpy==$NUMPY_VERSION
-# Update to latest wheel package for Python 3.5
-- pip install -U wheel
-- if [ -n "$BUILD_COMMIT" ]; then
-      checkout_commit $REPO_DIR $BUILD_COMMIT;
-  fi
-- source mpl_install.sh
-- mpl_build_install
+    # Maybe get and clean and patch source
+    - clean_code $REPO_DIR $BUILD_COMMIT
+    - build_wheel $REPO_DIR $PLAT
+
 script:
-# Fix numpy ast errors in tests by upgrading numpy
-- if [ -n "$(pyver_ge $VERSION 3.4.0)" ]; then
-  pip install numpy==1.10.4;
-  fi
-- pip install nose mock sphinx
-- install_activestate_tcl
-- MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
-- mpl_test
-before_deploy:
-  - cd $REPO_DIR/dist
-deploy:
-  provider: cloudfiles
-  username: travis-worker
-  api_key:
-    secure: K9JEFezfB40JDYntdoBKfxFD6qAlWGo1WaNM269JUAS6+8taD8gLOe83r1hyZWa0m2hdTilk0ySDUxjs+aTe2f4+ES+s8aiORSTFHChMUL/7+vteaHUle3BEuUDx23mnx5XNQT/n1gX2WkWwqZMH7JDAsHbexuquQZfJVAWRpo4=
-  region: ORD
-  container: wheels
-  skip_cleanup: true
+    # increase number of open files allowed for tests, on OSX
+    # https://github.com/matplotlib/matplotlib/issues/3315
+    - ulimit -n 4096
+    - install_run $PLAT
+
+after_success:
+    # Upload wheels to Rackspace container
+    - pip install wheelhouse-uploader
+    - python -m wheelhouse_uploader upload --local-folder
+          ${TRAVIS_BUILD_DIR}/wheelhouse/
+          --no-update-index
+          wheels
