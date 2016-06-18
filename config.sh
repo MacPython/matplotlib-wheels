@@ -17,6 +17,18 @@ function pre_build {
     build_bzip2
 }
 
+function build_wheel {
+    # Override common_utils build_wheel function
+    local repo_dir=${1:-$REPO_DIR}
+    local wheelhouse=$(abspath ${WHEEL_SDIR:-wheelhouse})
+    pre_build
+    pip install $(pip_opts) $BUILD_DEPENDS
+    # Use bdist_wheel to work round problem with wheel version
+    (cd $repo_dir && python setup.py bdist_wheel)
+    cp $repo_dir/dist/*.whl $wheelhouse
+    repair_wheelhouse $wheelhouse
+}
+
 function run_tests {
     # Runs tests on installed distribution from an empty directory
     MPL_SRC_DIR=../matplotlib
