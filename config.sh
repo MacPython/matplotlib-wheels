@@ -9,12 +9,16 @@ function pre_build {
         export CXX=clang++
         brew install pkg-config
     fi
-    # Use local freetype for versions which support it
-    export MPLLOCALFREETYPE=1
     source multibuild/library_builders.sh
     build_jpeg
     build_libpng
     build_bzip2
+    # Use local freetype for versions which support it
+    if [[ "$BUILD_COMMIT" =~ v2\. ]]; then
+        export MPLLOCALFREETYPE=1
+    else
+        build_freetype
+    fi
 }
 
 function build_wheel {
