@@ -1,7 +1,7 @@
 env:
     global:
         - REPO_DIR=matplotlib
-        - BUILD_COMMIT=v2.0.0b2
+        - BUILD_COMMIT=v2.0.0b3
         - BUILD_DEPENDS=
         - TEST_DEPENDS="numpy==1.11.0 nose mock sphinx"
         - PLAT=x86_64
