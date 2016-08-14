@@ -4,6 +4,7 @@
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
+    source multibuild/library_builders.sh
     if [ -n "$IS_OSX" ]; then
         export CC=clang
         export CXX=clang++
@@ -12,7 +13,6 @@ function pre_build {
         # https://github.com/matplotlib/matplotlib/issues/6945
         build_new_zlib
     fi
-    source multibuild/library_builders.sh
     build_jpeg
     build_libpng
     build_bzip2
