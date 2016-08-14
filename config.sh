@@ -8,6 +8,9 @@ function pre_build {
         export CC=clang
         export CXX=clang++
         brew install pkg-config
+        # Problems on OSX 10.6 with zlib
+        # https://github.com/matplotlib/matplotlib/issues/6945
+        build_new_zlib
     fi
     source multibuild/library_builders.sh
     build_jpeg
