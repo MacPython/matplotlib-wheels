@@ -4,13 +4,15 @@
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
-    source multibuild/library_builders.sh
     if [ -n "$IS_OSX" ]; then
         export CC=clang
         export CXX=clang++
         brew install pkg-config
         # Problems on OSX 10.6 with zlib
         # https://github.com/matplotlib/matplotlib/issues/6945
+        # Promote BUILD_PREFIX on search path to find new zlib
+        export CPPFLAGS="-L$BUILD_PREFIX/include"
+        export LDFLAGS="-L$BUILD_PREFIX/lib"
         build_new_zlib
     fi
     build_jpeg
