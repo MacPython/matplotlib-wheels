@@ -11,7 +11,10 @@ function pre_build {
         # Problems on OSX 10.6 with zlib
         # https://github.com/matplotlib/matplotlib/issues/6945
         # Promote BUILD_PREFIX on search path to find new zlib
-        export CPPFLAGS="-L$BUILD_PREFIX/include"
+        # Check include path with ``clang -x c -v -E /dev/null``
+        # Check lib path with ``ld -v .``
+        # https://langui.sh/2015/07/24/osx-clang-include-lib-search-paths/
+        export CPPFLAGS="-I$BUILD_PREFIX/include"
         export LDFLAGS="-L$BUILD_PREFIX/lib"
         build_new_zlib
     fi
