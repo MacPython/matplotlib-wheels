@@ -1,12 +1,12 @@
 env:
     global:
         - REPO_DIR=matplotlib
-        - BUILD_COMMIT=v2.0.0b4
+        - BUILD_COMMIT=v2.0.0rc1
         - BUILD_DEPENDS=
         - TEST_DEPENDS="numpy==1.11.0 nose mock sphinx"
         - PLAT=x86_64
         - UNICODE_WIDTH=32
-        - NP_BUILD_DEP=1.6.2
+        - NP_BUILD_DEP=1.7.1
         - MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
         - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
         # Following generated with
