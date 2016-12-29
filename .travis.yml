@@ -1,7 +1,7 @@
 env:
     global:
         - REPO_DIR=matplotlib
-        - BUILD_COMMIT=v1.5.3
+        - BUILD_COMMIT=wheel-testing
         - BUILD_DEPENDS=
         - TEST_DEPENDS="numpy==1.11.0 nose mock sphinx"
         - PLAT=x86_64
