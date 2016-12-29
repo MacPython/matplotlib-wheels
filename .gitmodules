@@ -1,6 +1,6 @@
 [submodule "matplotlib"]
 	path = matplotlib
-	url = git://github.com/matplotlib/matplotlib.git
+	url = git://github.com/matthew-brett/matplotlib.git
 [submodule "multibuild"]
 	path = multibuild
 	url = https://github.com/matthew-brett/multibuild.git
