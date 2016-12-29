@@ -53,7 +53,10 @@ function run_tests {
     if [[ "$mpl_version" =~ 1\. ]]; then
         local extra_test_args="-e TestTinyPages"
     fi
-    python $MPL_SRC_DIR/tests.py -svv $extra_test_args
+    pip show setuptools
+    python -c 'import mpl_toolkits'
+    python -c 'import mpl_toolkits.tests'
+    python $MPL_SRC_DIR/tests.py -svv $extra_test_args mpl_toolkits.tests.test_mplot3d
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
