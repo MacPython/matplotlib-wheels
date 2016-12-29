@@ -2,8 +2,10 @@ env:
     global:
         - REPO_DIR=matplotlib
         - BUILD_COMMIT=v1.5.3
+        # These two set further down
         - BUILD_DEPENDS=
-        - TEST_DEPENDS="numpy==1.11.0 nose mock sphinx"
+        - TEST_DEPENDS=
+        - NP_TEST_DEP=1.11.0
         - PLAT=x86_64
         - UNICODE_WIDTH=32
         - NP_BUILD_DEP=1.6.2
@@ -32,9 +34,11 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.6
         - NP_BUILD_DEP="1.11.3"
+        - NP_TEST_DEP="1.11.3"
 
 before_install:
     - BUILD_DEPENDS="numpy==$NP_BUILD_DEP"
+    - TEST_DEPENDS="numpy==$NP_TEST_DEP nose mock sphinx"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
     - before_install
