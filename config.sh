@@ -56,7 +56,7 @@ function run_tests {
         local extra_test_args="-e TestTinyPages"
         (cd $MPL_INSTALL_DIR && patch -p1 < $thisd/../namespace.patch)
     fi
-    python $MPL_SRC_DIR/tests.py -sv $extra_test_args
+    python $MPL_SRC_DIR/tests.py -sv $extra_test_args -e test_mathtext
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
