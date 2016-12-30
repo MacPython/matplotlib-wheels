@@ -50,10 +50,13 @@ function run_tests {
     echo "testing matplotlib using 1 process"
     # 1.5.x has pesky unicode error for sphinx extension test
     local mpl_version=$(python -c "import matplotlib; print(matplotlib.__version__)")
+    # And a nasty namespace finding bug
+    local thisd=$PWD
     if [[ "$mpl_version" =~ 1\. ]]; then
         local extra_test_args="-e TestTinyPages"
+        (cd $MPL_INSTALL_DIR && patch -p1 < $thisd/../namespace.patch)
     fi
-    python $MPL_SRC_DIR/tests.py -sv $extra_test_args -e test_mplot3d -e test_axis_grid
+    python $MPL_SRC_DIR/tests.py -sv $extra_test_args
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
