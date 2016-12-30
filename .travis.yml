@@ -1,12 +1,14 @@
 env:
     global:
         - REPO_DIR=matplotlib
-        - BUILD_COMMIT=v2.0.0rc2
+        - BUILD_COMMIT=v2.x
+        # These variables filled in further below
         - BUILD_DEPENDS=
-        - TEST_DEPENDS="numpy==1.11.0 nose mock sphinx"
+        - TEST_DEPENDS=
         - PLAT=x86_64
         - UNICODE_WIDTH=32
         - NP_BUILD_DEP=1.7.1
+        - NP_TEST_DEP=1.11.0
         - MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
         - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
         # Following generated with
@@ -61,19 +63,25 @@ matrix:
     #     - PLAT=i686
     #     - NP_BUILD_DEP="1.9.3"
     # - os: osx
-    #   language: objective-c
+    #   language: generic
     #   env:
     #     - MB_PYTHON_VERSION=2.7
     # - os: osx
-    #   language: objective-c
+    #   language: generic
     #   env:
     #     - MB_PYTHON_VERSION=3.4
     #     - NP_BUILD_DEP="1.7.1"
     - os: osx
-      language: objective-c
+      language: generic
       env:
         - MB_PYTHON_VERSION=3.5
         - NP_BUILD_DEP="1.9.3"
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - NP_BUILD_DEP="1.11.3"
+        - NP_TEST_DEP="1.11.3"
 
 before_install:
     - BUILD_DEPENDS="numpy==$NP_BUILD_DEP"
@@ -90,6 +98,7 @@ install:
     - python rm_test_images.py wheelhouse/*.whl
 
 script:
+    - TEST_DEPENDS="numpy==$NP_TEST_DEP nose mock sphinx"
     # increase number of open files allowed for tests, on OSX
     # https://github.com/matplotlib/matplotlib/issues/3315
     - ulimit -n 4096
