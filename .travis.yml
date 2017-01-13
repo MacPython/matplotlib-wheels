@@ -29,6 +29,17 @@ matrix:
       # Exclude the default Python 3.5 build
       - python: 3.5
   include:
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - NP_BUILD_DEP="1.11.3"
+        - NP_TEST_DEP="1.11.3"
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.6
+        - PLAT=i686
+        - NP_BUILD_DEP="1.11.3"
+        - NP_TEST_DEP="1.11.3"
     - os: osx
       language: generic
       env:
@@ -55,7 +66,7 @@ script:
     # increase number of open files allowed for tests, on OSX
     # https://github.com/matplotlib/matplotlib/issues/3315
     - ulimit -n 4096
-    - install_run $PLAT
+    # - install_run $PLAT
 
 after_success:
     # Upload wheels to Rackspace container
