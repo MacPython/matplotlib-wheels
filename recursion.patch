@@ -6,7 +6,7 @@ index 1686818..9b13392 100755
  import sys
  import time
  
-+sys.setrecursionlimit(2000)
++sys.setrecursionlimit(1500)
 +
  import matplotlib
  matplotlib.use('agg')
