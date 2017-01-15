@@ -22,7 +22,8 @@ function pre_build {
     build_libpng
     build_bzip2
     # Use local freetype for versions which support it
-    if [[ "$BUILD_COMMIT" =~ v2\. ]]; then
+    local has_local=$(cd matplotlib && set +e; git merge-base --is-ancestor 5ad9b15 HEAD && echo 1)
+    if [ -n "$has_local" ]; then
         export MPLLOCALFREETYPE=1
     else
         build_freetype
