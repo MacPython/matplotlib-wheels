@@ -28,6 +28,12 @@ function pre_build {
     else
         build_freetype
     fi
+    # Include tests to allow testing of installed package
+    cat > matplotlib/setup.cfg << EOF
+[packages]
+tests = True
+toolkits_tests = True
+EOF
 }
 
 function build_wheel {
