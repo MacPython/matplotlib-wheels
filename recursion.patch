@@ -1,0 +1,13 @@
+diff --git a/tests.py b/tests.py
+index 1686818..9b13392 100755
+--- a/tests.py
++++ b/tests.py
+@@ -13,6 +13,8 @@ import os
+ import sys
+ import time
+ 
++sys.setrecursionlimit(2000)
++
+ import matplotlib
+ matplotlib.use('agg')
+ 

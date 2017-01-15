@@ -47,6 +47,9 @@ function run_tests {
     python -c "import matplotlib; print(matplotlib.__file__)"
     python -c "from matplotlib import font_manager"
 
+    # Patch testing function for recursion
+    (cd $MPL_SRC_DIR && patch -p1 < ../recursion.patch)
+
     echo "testing matplotlib using 1 process"
     # 1.5.x has pesky unicode error for sphinx extension test
     local mpl_version=$(python -c "import matplotlib; print(matplotlib.__version__)")
