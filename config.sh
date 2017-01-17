@@ -1,6 +1,10 @@
 # Define custom utilities
 # Test for OSX with [ -n "$IS_OSX" ]
 
+# Commit where MPLLOCALFREETYPE introduced
+LOCAL_FT_COMMIT=5ad9b15
+
+
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
     # Runs in the root directory of this repository.
@@ -22,7 +26,7 @@ function pre_build {
     build_libpng
     build_bzip2
     # Use local freetype for versions which support it
-    local has_local=$(cd matplotlib && set +e; git merge-base --is-ancestor 5ad9b15 HEAD && echo 1)
+    local has_local=$(cd matplotlib && set +e; git merge-base --is-ancestor $LOCAL_FT_COMMIT HEAD && echo 1)
     if [ -n "$has_local" ]; then
         export MPLLOCALFREETYPE=1
     else
@@ -39,6 +43,7 @@ EOF
 function build_wheel {
     # Override common_utils build_wheel function to fix version error
     build_bdist_wheel $@
+    # Test images then removed in .travis.yml
 }
 
 function run_tests {
@@ -54,15 +59,14 @@ function run_tests {
     python -c "import matplotlib; print(matplotlib.__file__)"
     python -c "from matplotlib import font_manager"
 
-    # Patch testing function for recursion
-    (cd $MPL_SRC_DIR && patch -p1 < ../recursion.patch)
-
     echo "testing matplotlib using 1 process"
     # 1.5.x has pesky unicode error for sphinx extension test
     local mpl_version=$(python -c "import matplotlib; print(matplotlib.__version__)")
     if [[ "$mpl_version" =~ 1\. ]]; then
         local extra_test_args="-e TestTinyPages"
-    fi
+    else:
+        # See gh issue 7799
+        local extra_test_args="--recursionlimit==1500"
     python $MPL_SRC_DIR/tests.py -sv $extra_test_args
 
     echo "Check import of tcl / tk"
