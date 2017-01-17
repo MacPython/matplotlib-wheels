@@ -66,7 +66,7 @@ function run_tests {
         local extra_test_args="-e TestTinyPages"
     else
         # See gh issue 7799
-        local extra_test_args="--recursionlimit==1500"
+        local extra_test_args="--recursionlimit=1500"
     fi
     python $MPL_SRC_DIR/tests.py -sv $extra_test_args
 
