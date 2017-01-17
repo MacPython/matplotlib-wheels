@@ -64,9 +64,10 @@ function run_tests {
     local mpl_version=$(python -c "import matplotlib; print(matplotlib.__version__)")
     if [[ "$mpl_version" =~ 1\. ]]; then
         local extra_test_args="-e TestTinyPages"
-    else:
+    else
         # See gh issue 7799
         local extra_test_args="--recursionlimit==1500"
+    fi
     python $MPL_SRC_DIR/tests.py -sv $extra_test_args
 
     echo "Check import of tcl / tk"
