@@ -21,6 +21,9 @@ function pre_build {
         export CPPFLAGS="-I$BUILD_PREFIX/include"
         export LDFLAGS="-L$BUILD_PREFIX/lib"
         build_new_zlib
+        local default_backend=macosx
+    else
+        local default_backend=TkAgg
     fi
     build_jpeg
     build_libpng
@@ -37,6 +40,9 @@ function pre_build {
 [packages]
 tests = True
 toolkits_tests = True
+
+[rc_options]
+backend = $default_backend
 EOF
 }
 
