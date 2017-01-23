@@ -23,6 +23,7 @@ function pre_build {
         build_new_zlib
         local default_backend=macosx
     else
+        # Tk not available by default on manylinux build container.
         local default_backend=TkAgg
     fi
     build_jpeg
@@ -44,12 +45,6 @@ toolkits_tests = True
 [rc_options]
 backend = $default_backend
 EOF
-}
-
-function build_wheel {
-    # Override common_utils build_wheel function to fix version error
-    build_bdist_wheel $@
-    # Test images then removed in .travis.yml
 }
 
 function run_tests {
