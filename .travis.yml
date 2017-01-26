@@ -17,7 +17,7 @@ env:
         - secure:
             "hKf07zeIRvEMH9qWUkkmFHu768HZdI+EOCO99KjsAjbwa7QdUSwZ9XZKCcyNiym5iyrIBWHywyEtO0wk/LsTxhNZGZQP0nJbyTSSy4VGMQmpIx1sVmDKtrykVJaxCfXqpYYDttBTC4TyvxW/3LyuqBfbU14R4uoSFY/mK+QIJ0A="
         # Daily commit, if present, overrides BUILD_COMMIT
-        # - DAILY_COMMIT=master
+        - DAILY_COMMIT=master
 
 language: python
 # Default Python version is usually 2.7
