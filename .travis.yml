@@ -1,6 +1,7 @@
 env:
     global:
         - REPO_DIR=matplotlib
+        # Also see DAILY_COMMIT below
         - BUILD_COMMIT=v2.0.0
         # These variables filled in further below
         - BUILD_DEPENDS=
@@ -15,6 +16,8 @@ env:
         # travis encrypt -r MacPython/matplotlib-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
         - secure:
             "hKf07zeIRvEMH9qWUkkmFHu768HZdI+EOCO99KjsAjbwa7QdUSwZ9XZKCcyNiym5iyrIBWHywyEtO0wk/LsTxhNZGZQP0nJbyTSSy4VGMQmpIx1sVmDKtrykVJaxCfXqpYYDttBTC4TyvxW/3LyuqBfbU14R4uoSFY/mK+QIJ0A="
+        # Daily commit, if present, overrides BUILD_COMMIT
+        # - DAILY_COMMIT=master
 
 language: python
 # Default Python version is usually 2.7
@@ -95,6 +98,13 @@ matrix:
         - NP_TEST_DEP="1.11.3"
 
 before_install:
+    - if [ -z "$DAILY_COMMIT" ]; then
+          CONTAINER=wheels;
+          UPLOAD_ARGS="--no-update-index";
+      else
+          CONTAINER="pre-release";
+          BUILD_COMMIT=$DAILY_COMMIT;
+      fi
     - BUILD_DEPENDS="numpy==$NP_BUILD_DEP"
     - source multibuild/common_utils.sh
     - source multibuild/travis_steps.sh
@@ -115,10 +125,10 @@ script:
     - ulimit -n 4096
     - install_run $PLAT
 
-# after_success:
+after_success:
     # Upload wheels to Rackspace container
     - pip install wheelhouse-uploader
     - python -m wheelhouse_uploader upload --local-folder
           ${TRAVIS_BUILD_DIR}/wheelhouse/
-          --no-update-index
-          wheels
+          $UPLOAD_ARGS
+          $CONTAINER
