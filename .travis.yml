@@ -17,7 +17,7 @@ env:
         - secure:
             "hKf07zeIRvEMH9qWUkkmFHu768HZdI+EOCO99KjsAjbwa7QdUSwZ9XZKCcyNiym5iyrIBWHywyEtO0wk/LsTxhNZGZQP0nJbyTSSy4VGMQmpIx1sVmDKtrykVJaxCfXqpYYDttBTC4TyvxW/3LyuqBfbU14R4uoSFY/mK+QIJ0A="
         # Daily commit, if present, overrides BUILD_COMMIT
-        - DAILY_COMMIT=master
+        # - DAILY_COMMIT=master
 
 language: python
 # Default Python version is usually 2.7
@@ -34,13 +34,6 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=2.7
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - UNICODE_WIDTH=16
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
         - PLAT=i686
     - os: linux
       env:
@@ -50,16 +43,8 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.4
-        - NP_BUILD_DEP="1.7.1"
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
         - PLAT=i686
         - NP_BUILD_DEP="1.7.1"
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP="1.9.3"
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
@@ -68,32 +53,7 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
-        - NP_BUILD_DEP="1.11.3"
-        - NP_TEST_DEP="1.11.3"
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
         - PLAT=i686
-        - NP_BUILD_DEP="1.11.3"
-        - NP_TEST_DEP="1.11.3"
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=2.7
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - NP_BUILD_DEP="1.7.1"
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP="1.9.3"
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.6
         - NP_BUILD_DEP="1.11.3"
         - NP_TEST_DEP="1.11.3"
 
@@ -123,7 +83,8 @@ script:
     # increase number of open files allowed for tests, on OSX
     # https://github.com/matplotlib/matplotlib/issues/3315
     - ulimit -n 4096
-    - install_run $PLAT
+    # - install_run $PLAT
+    - CONTAINER="extra-wheels"
 
 after_success:
     # Upload wheels to Rackspace container
