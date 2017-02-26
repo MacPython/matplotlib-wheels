@@ -4,6 +4,10 @@
 # Commit where MPLLOCALFREETYPE introduced
 LOCAL_FT_COMMIT=5ad9b15
 
+# Test arguments
+NPROC=2
+PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 --cov-report= --cov=lib -n $NPROC"
+
 
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
@@ -60,16 +64,8 @@ function run_tests {
     python -c "import matplotlib; print(matplotlib.__file__)"
     python -c "from matplotlib import font_manager"
 
-    echo "testing matplotlib using 1 process"
-    # 1.5.x has pesky unicode error for sphinx extension test
-    local mpl_version=$(python -c "import matplotlib; print(matplotlib.__version__)")
-    if [[ "$mpl_version" =~ 1\. ]]; then
-        local extra_test_args="-e TestTinyPages"
-    else
-        # See gh issue 7799
-        local extra_test_args="--recursionlimit=1500"
-    fi
-    python $MPL_SRC_DIR/tests.py -sv $extra_test_args
+    echo "testing matplotlib using $NPROC process(es)"
+    py.test $PYTEST_ARGS
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
