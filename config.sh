@@ -64,6 +64,12 @@ function run_tests {
     python -c "import matplotlib; print(matplotlib.__file__)"
     python -c "from matplotlib import font_manager"
 
+    # Workaround for pytest-xdist flaky collection order
+    # https://github.com/pytest-dev/pytest/issues/920
+    # https://github.com/pytest-dev/pytest/issues/1075
+    export PYTHONHASHSEED=$(python -c 'import random; print(random.randint(1, 4294967295))')
+    echo PYTHONHASHSEED=$PYTHONHASHSEED
+
     echo "testing matplotlib using $NPROC process(es)"
     py.test $PYTEST_ARGS $MPL_INSTALL_DIR $(dirname ${MPL_INSTALL_DIR})/mpl_toolkits
 
