@@ -6,7 +6,7 @@ LOCAL_FT_COMMIT=5ad9b15
 
 # Test arguments
 NPROC=2
-PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 --cov-report= --cov=lib -n $NPROC"
+PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC"
 
 
 function pre_build {
@@ -65,7 +65,7 @@ function run_tests {
     python -c "from matplotlib import font_manager"
 
     echo "testing matplotlib using $NPROC process(es)"
-    py.test $PYTEST_ARGS
+    py.test $PYTEST_ARGS $MPL_INSTALL_DIR $(dirname ${MPL_INSTALL_DIR})/mpl_toolkits
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
