@@ -15,7 +15,9 @@ function pre_build {
     if [ -n "$IS_OSX" ]; then
         export CC=clang
         export CXX=clang++
-        brew install pkg-config
+        command -v pkg-config >/dev/null 2>&1 || {
+            brew install pkg-config
+        }
         # Problems on OSX 10.6 with zlib
         # https://github.com/matplotlib/matplotlib/issues/6945
         # Promote BUILD_PREFIX on search path to find new zlib
