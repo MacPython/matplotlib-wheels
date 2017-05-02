@@ -69,7 +69,7 @@ function run_tests {
         # See gh issue 7799
         local extra_test_args="--recursionlimit=1500"
     fi
-    python $MPL_SRC_DIR/tests.py -sv $extra_test_args
+    # python $MPL_SRC_DIR/tests.py -sv $extra_test_args
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
