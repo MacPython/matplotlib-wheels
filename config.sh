@@ -57,6 +57,10 @@ function run_tests {
     MPL_INSTALL_DIR=$(dirname $(python -c 'import matplotlib; print(matplotlib.__file__)'))
     cp -r ${MPL_SRC_DIR}/lib/matplotlib/tests/baseline_images $MPL_INSTALL_DIR/tests
 
+    # Patch test_image file to fix test order bug
+    local patch_file=$(abspath ../patches/test_image.patch)
+    (cd $MPL_INSTALL_DIR && patch -p0 < $patch_file)
+
     if [ -z "$IS_OSX" ]; then
         # Need fc-list for tests
         sudo apt-get install fontconfig
