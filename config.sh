@@ -11,7 +11,7 @@ function pre_build {
     if [ -n "$IS_OSX" ]; then
         export CC=clang
         export CXX=clang++
-        brew install pkg-config
+        install_pkg_config
         # Problems on OSX 10.6 with zlib
         # https://github.com/matplotlib/matplotlib/issues/6945
         # Promote BUILD_PREFIX on search path to find new zlib
@@ -23,6 +23,9 @@ function pre_build {
         build_new_zlib
         local default_backend=macosx
     else
+        # Need to downgrade auditwheel - see
+        # https://github.com/pypa/auditwheel/issues/68
+        /opt/python/cp36-cp36m/bin/pip install auditwheel==1.5
         # Tk not available by default on manylinux build container.
         local default_backend=TkAgg
     fi
