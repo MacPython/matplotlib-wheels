@@ -1,0 +1,29 @@
+--- tests/test_image.py.old	2017-05-02 17:05:55.000000000 +0100
++++ tests/test_image.py	2017-05-02 17:06:50.000000000 +0100
+@@ -24,7 +24,7 @@
+ from numpy.testing import (
+     assert_array_equal, assert_array_almost_equal, assert_allclose)
+ from matplotlib.testing.noseclasses import KnownFailureTest
+-from copy import copy
++from copy import deepcopy
+ from numpy import ma
+ import matplotlib.image as mimage
+ import matplotlib.colors as colors
+@@ -698,7 +698,7 @@
+     Z2 = mlab.bivariate_normal(X, Y, 1.5, 0.5, 1, 1)
+     Z = 10*(Z2 - Z1)  # difference of Gaussians
+ 
+-    palette = copy(plt.cm.gray)
++    palette = deepcopy(plt.cm.gray)
+     palette.set_over('r', 1.0)
+     palette.set_under('g', 1.0)
+     palette.set_bad('b', 1.0)
+@@ -761,7 +761,7 @@
+                   remove_text=True, style='default')
+ def test_imshow_masked_interpolation():
+ 
+-    cm = copy(plt.get_cmap('viridis'))
++    cm = deepcopy(plt.get_cmap('viridis'))
+     cm.set_over('r')
+     cm.set_under('b')
+     cm.set_bad('k')
