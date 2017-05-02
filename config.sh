@@ -57,6 +57,11 @@ function run_tests {
     MPL_INSTALL_DIR=$(dirname $(python -c 'import matplotlib; print(matplotlib.__file__)'))
     cp -r ${MPL_SRC_DIR}/lib/matplotlib/tests/baseline_images $MPL_INSTALL_DIR/tests
 
+    if [ -z "$IS_OSX" ]; then
+        # Need fc-list for tests
+        sudo apt-get install fontconfig
+    fi
+
     echo "sanity checks"
     python -c "import dateutil; print(dateutil.__version__)"
     python -c "import sys; print('\n'.join(sys.path))"
