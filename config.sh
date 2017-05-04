@@ -23,9 +23,6 @@ function pre_build {
         build_new_zlib
         local default_backend=macosx
     else
-        # Need to downgrade auditwheel - see
-        # https://github.com/pypa/auditwheel/issues/68
-        /opt/python/cp36-cp36m/bin/pip install auditwheel==1.5
         # Tk not available by default on manylinux build container.
         local default_backend=TkAgg
     fi
