@@ -73,6 +73,8 @@ function run_tests {
     python -c "import matplotlib; print(matplotlib.__file__)"
     python -c "from matplotlib import font_manager"
 
+    python -c "import os; print(not 'DISPLAY' in os.environ)"
+
     # Workaround for pytest-xdist flaky collection order
     # https://github.com/pytest-dev/pytest/issues/920
     # https://github.com/pytest-dev/pytest/issues/1075
