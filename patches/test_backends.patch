@@ -5,7 +5,7 @@
  
  
 -@pytest.mark.skipif("DISPLAY" not in os.environ,
-+@pytest.mark.skipif(not os.environ.get('DISPLAY'),
++@pytest.mark.skipif(print("===", repr(os.environ.get("DISPLAY")), "===") or not os.environ.get("DISPLAY"),
                      reason="The DISPLAY environment variable is not set.")
  @pytest.mark.parametrize("backend", _get_available_backends())
  def test_backend(backend):
