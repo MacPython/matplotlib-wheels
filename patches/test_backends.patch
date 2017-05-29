@@ -1,0 +1,11 @@
+--- tests/test_backends_interactive.py.old	2017-05-29 20:56:31.000000000 +0100
++++ tests/test_backends_interactive.py	2017-05-29 20:57:15.000000000 +0100
+@@ -41,7 +41,7 @@
+ """
+ 
+ 
+-@pytest.mark.skipif("DISPLAY" not in os.environ,
++@pytest.mark.skipif(not os.environ.get('DISPLAY'),
+                     reason="The DISPLAY environment variable is not set.")
+ @pytest.mark.parametrize("backend", _get_available_backends())
+ def test_backend(backend):
