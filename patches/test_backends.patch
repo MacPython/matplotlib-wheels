@@ -1,11 +1,10 @@
---- tests/test_backends_interactive.py.old	2017-05-29 20:56:31.000000000 +0100
-+++ tests/test_backends_interactive.py	2017-05-29 20:57:15.000000000 +0100
-@@ -41,7 +41,7 @@
- """
- 
- 
--@pytest.mark.skipif("DISPLAY" not in os.environ,
-+@pytest.mark.skipif(print("===", repr(os.environ.get("DISPLAY")), "===") or not os.environ.get("DISPLAY"),
-                     reason="The DISPLAY environment variable is not set.")
+--- tests/test_backends_interactive.py.old	2017-05-30 09:29:32.000000000 +0100
++++ tests/test_backends_interactive.py	2017-05-30 09:31:19.000000000 +0100
+@@ -46,6 +46,7 @@
  @pytest.mark.parametrize("backend", _get_available_backends())
  def test_backend(backend):
+     environ = os.environ.copy()
++    assert environ.get('DISPLAY') is None
+     environ["MPLBACKEND"] = backend
+     proc = Popen([sys.executable, "-c", _test_script], env=environ)
+     # Empirically, 1s is not enough on Travis.
