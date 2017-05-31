@@ -1,5 +1,5 @@
 --- tests/test_backends_interactive.py.old	2017-05-30 09:29:32.000000000 +0100
-+++ tests/test_backends_interactive.py	2017-05-31 12:07:50.000000000 +0100
++++ tests/test_backends_interactive.py	2017-05-31 12:38:31.000000000 +0100
 @@ -21,10 +21,12 @@
  
  def _get_available_backends():
@@ -12,7 +12,7 @@
 +            not os.environ.get("DISPLAY")
 +            or sys.version_info < (3,)
 +            or importlib.util.find_spec(module_name) is None,
-+            reason="No /tmp/launch-jw0bwI/org.macosforge.xquartz:0, or could not import {!r}".format(module_name))(
++            reason="No $DISPLAY, or could not import {!r}".format(module_name))(
 +                backend)
          for module_name, backend in [
                  ("PyQt5", "qt5agg"),
