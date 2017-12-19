@@ -124,6 +124,9 @@ matrix:
         - NP_TEST_DEP="1.11.3"
 
 before_install:
+    # See:
+    # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
+    - python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
     - if [ -z "$DAILY_COMMIT" ]; then
           CONTAINER=wheels;
           UPLOAD_ARGS="--no-update-index";
