@@ -6,7 +6,7 @@ LOCAL_FT_COMMIT=5ad9b15
 
 # Test arguments
 NPROC=2
-PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC -m 'not network'"
+PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC"
 
 
 function pre_build {
@@ -76,7 +76,7 @@ function run_tests {
     echo PYTHONHASHSEED=$PYTHONHASHSEED
 
     echo "testing matplotlib using $NPROC process(es)"
-    py.test $PYTEST_ARGS $MPL_INSTALL_DIR $(dirname ${MPL_INSTALL_DIR})/mpl_toolkits
+    py.test $PYTEST_ARGS -m 'not network' $MPL_INSTALL_DIR $(dirname ${MPL_INSTALL_DIR})/mpl_toolkits
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
