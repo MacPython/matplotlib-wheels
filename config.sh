@@ -6,7 +6,7 @@ LOCAL_FT_COMMIT=5ad9b15
 
 # Test arguments
 NPROC=2
-PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC --no-network"
+PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC -m 'not network'"
 
 
 function pre_build {
