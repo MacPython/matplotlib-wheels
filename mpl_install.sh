@@ -40,7 +40,7 @@ function mpl_test {
     echo "testing matplotlib using 1 process"
     # Exclude known fail on Python 3.4
     # https://github.com/matplotlib/matplotlib/pull/2981
-    $PYTHON_EXE ../matplotlib/tests.py -sv -e test_override_builtins
+    $PYTHON_EXE ../matplotlib/tests.py -sv -e test_override_builtins --no-network
     require_success "Testing matplotlib returned non-zero status"
     cd ..
 }
