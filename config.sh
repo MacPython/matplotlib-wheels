@@ -16,14 +16,8 @@ function pre_build {
         export CC=clang
         export CXX=clang++
         install_pkg_config
-        # Problems on OSX 10.6 with zlib
-        # https://github.com/matplotlib/matplotlib/issues/6945
-        # Promote BUILD_PREFIX on search path to find new zlib
-        # Check include path with ``clang -x c -v -E /dev/null``
-        # Check lib path with ``ld -v .``
-        # https://langui.sh/2015/07/24/osx-clang-include-lib-search-paths/
-        export CPPFLAGS="-I$BUILD_PREFIX/include"
-        export LDFLAGS="-L$BUILD_PREFIX/lib"
+        # See https://github.com/matplotlib/matplotlib/issues/10649
+        export LDFLAGS="-headerpad_max_install_names"
         build_new_zlib
         local default_backend=macosx
     else
