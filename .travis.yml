@@ -2,7 +2,7 @@ env:
     global:
         - REPO_DIR=matplotlib
         # Also see DAILY_COMMIT below
-        - BUILD_COMMIT=v2.2.0rc1
+        - BUILD_COMMIT=v2.2.0
         # These variables filled in further below
         - BUILD_DEPENDS=
         - TEST_DEPENDS=
