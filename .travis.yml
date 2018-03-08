@@ -8,7 +8,7 @@ env:
         - TEST_DEPENDS=
         - PLAT=x86_64
         - UNICODE_WIDTH=32
-        - NP_BUILD_DEP=1.10.0
+        - NP_BUILD_DEP=1.10.1
         - NP_TEST_DEP=1.11.3
         - MANYLINUX_URL=https://nipy.bic.berkeley.edu/manylinux
         - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
@@ -34,7 +34,6 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
-        - NP_BUILD_DEP="1.9.3"
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
@@ -59,7 +58,6 @@ matrix:
       env:
         - MB_PYTHON_VERSION=3.5
         - PLAT=i686
-        - NP_BUILD_DEP="1.9.3"
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
