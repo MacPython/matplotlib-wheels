@@ -16,8 +16,8 @@ env:
         # travis encrypt -r MacPython/matplotlib-wheels WHEELHOUSE_UPLOADER_SECRET=<the api key>
         - secure:
             "hKf07zeIRvEMH9qWUkkmFHu768HZdI+EOCO99KjsAjbwa7QdUSwZ9XZKCcyNiym5iyrIBWHywyEtO0wk/LsTxhNZGZQP0nJbyTSSy4VGMQmpIx1sVmDKtrykVJaxCfXqpYYDttBTC4TyvxW/3LyuqBfbU14R4uoSFY/mK+QIJ0A="
-        # Daily commit, if present, overrides BUILD_COMMIT
-        # - DAILY_COMMIT=master
+        # Matplotlib commit when running from master branch
+        - DAILY_COMMIT=master
 
 language: python
 # Default Python version is usually 2.7
@@ -67,12 +67,12 @@ before_install:
     # See:
     # https://github.com/travis-ci/travis-ci/issues/8920#issuecomment-352661024
     - python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
-    - if [ -z "$DAILY_COMMIT" ]; then
+    - if [ "$TRAVIS_BRANCH" == "master" ]; then
+          CONTAINER="pre-release";
+          BUILD_COMMIT=${DAILY_COMMIT:-$BUILD_COMMIT};
+      else
           CONTAINER=wheels;
           UPLOAD_ARGS="--no-update-index";
-      else
-          CONTAINER="pre-release";
-          BUILD_COMMIT=$DAILY_COMMIT;
       fi
     - BUILD_DEPENDS="numpy==$NP_BUILD_DEP"
     - source multibuild/common_utils.sh
