@@ -58,6 +58,13 @@ matrix:
         - PLAT=i686
     - os: linux
       env:
+        - MB_PYTHON_VERSION=3.4
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
+        - PLAT=i686
+    - os: linux
+      env:
         - MB_PYTHON_VERSION=2.7
     - os: linux
       env:
@@ -77,6 +84,10 @@ matrix:
       language: generic
       env:
         - MB_PYTHON_VERSION=3.5
+    - os: osx
+      language: generic
+      env:
+        - MB_PYTHON_VERSION=3.4
     - os: osx
       language: generic
       env:
@@ -95,6 +106,10 @@ matrix:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.5
+        - PLAT=i686
+    - os: linux
+      env:
+        - MB_PYTHON_VERSION=3.4
         - PLAT=i686
     - os: linux
       env:
