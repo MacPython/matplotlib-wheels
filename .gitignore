@@ -1,9 +1,0 @@
-*.pyc
-*.swp
-*~
-build
-working
-downloads
-venv
-result_images
-tmp_for_test
