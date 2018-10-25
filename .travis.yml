@@ -111,7 +111,7 @@ install:
     - python rm_test_images.py wheelhouse/*.whl
 
 script:
-    - TEST_DEPENDS="numpy==$NP_TEST_DEP pytest<4 mock sphinx pytest pytest-timeout pytest-xdist pytest-faulthandler pytest-rerunfailures requests[security] pyqt5"
+    - TEST_DEPENDS="numpy==$NP_TEST_DEP pytest<4 mock sphinx pytest-timeout pytest-xdist pytest-faulthandler pytest-rerunfailures requests[security] pyqt5"
     # increase number of open files allowed for tests, on OSX
     # https://github.com/matplotlib/matplotlib/issues/3315
     - ulimit -n 4096
