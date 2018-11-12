@@ -19,6 +19,7 @@ function pre_build {
         # See https://github.com/matplotlib/matplotlib/issues/10649
         export LDFLAGS="-headerpad_max_install_names"
         build_new_zlib
+    fi
     build_jpeg
     build_libpng
     build_bzip2
@@ -35,8 +36,6 @@ function pre_build {
 tests = True
 toolkits_tests = True
 
-[rc_options]
-backend = TkAgg
 EOF
 }
 
