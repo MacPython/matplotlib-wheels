@@ -6,7 +6,7 @@ LOCAL_FT_COMMIT=5ad9b15
 
 # Test arguments
 NPROC=2
-PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC"
+PYTEST_ARGS="-ra --timeout=300 --durations=25 -n $NPROC"
 
 
 function pre_build {
