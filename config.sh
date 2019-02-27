@@ -51,7 +51,7 @@ function run_tests {
     # Get test images
     MPL_INSTALL_DIR=$(dirname $(python -c 'import matplotlib; print(matplotlib.__file__)'))
     cp -r ${MPL_SRC_DIR}/lib/matplotlib/tests/baseline_images $MPL_INSTALL_DIR/tests
-    rm $HOME/.cache/matplotlib/font*
+    rm -f $HOME/.cache/matplotlib/*font*
     if [ -z "$IS_OSX" ]; then
         # Need fc-list for tests
         sudo apt-get install fontconfig
@@ -70,7 +70,7 @@ function run_tests {
     echo PYTHONHASHSEED=$PYTHONHASHSEED
 
     echo "testing matplotlib using $NPROC process(es)"
-    py.test $PYTEST_ARGS -m 'not network' $MPL_INSTALL_DIR $(dirname ${MPL_INSTALL_DIR})/mpl_toolkits
+    py.test $PYTEST_ARGS -m 'not network' $MPL_INSTALL_DIR $(dirname ${MPL_INSTALL_DIR})/mpl_toolkits -k 'not test_font_styles'
 
     echo "Check import of tcl / tk"
     MPLBACKEND="tkagg" python -c 'import matplotlib.pyplot as plt; print(plt.get_backend())'
