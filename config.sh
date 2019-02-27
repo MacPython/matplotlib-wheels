@@ -51,7 +51,7 @@ function run_tests {
     # Get test images
     MPL_INSTALL_DIR=$(dirname $(python -c 'import matplotlib; print(matplotlib.__file__)'))
     cp -r ${MPL_SRC_DIR}/lib/matplotlib/tests/baseline_images $MPL_INSTALL_DIR/tests
-
+    rm $HOME/.cache/matplotlib/font*
     if [ -z "$IS_OSX" ]; then
         # Need fc-list for tests
         sudo apt-get install fontconfig
