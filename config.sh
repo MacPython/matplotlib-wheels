@@ -40,8 +40,6 @@ function pre_build {
 tests = True
 toolkits_tests = True
 
-[rc_options]
-backend = $default_backend
 EOF
 }
 
