@@ -66,6 +66,8 @@ matrix:
         - MB_PYTHON_VERSION=3.8
         - NP_BUILD_DEP=1.14.5
         - NP_TEST_DEP=1.14.5
+        - MB_PYTHON_OSX_VER=10.9
+        - MB_ML_VER=2010
     - os: osx
       language: generic
       env:
