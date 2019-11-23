@@ -8,6 +8,10 @@ LOCAL_FT_COMMIT=5ad9b15
 NPROC=2
 PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC"
 
+function pip_opts {
+    # Define extra pip arguments
+    echo "--prefer-binary"
+}
 
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
