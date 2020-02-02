@@ -31,76 +31,76 @@ matrix:
       # Exclude the default Python 3.5 build
       - python: 3.5
   include:
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=1.14.5
-        - NP_TEST_DEP=1.14.5
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=1.14.5
-        - NP_TEST_DEP=1.14.5
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - PLAT=i686
-    - os: linux
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.7
+#        - NP_BUILD_DEP=1.14.5
+#        - NP_TEST_DEP=1.14.5
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.7
+#        - NP_BUILD_DEP=1.14.5
+#        - NP_TEST_DEP=1.14.5
+#        - PLAT=i686
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.6
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.6
+#        - PLAT=i686
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.5
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.5
+#        - PLAT=i686
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.4
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=3.4
+#        - PLAT=i686
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=2.7
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=2.7
+#        - PLAT=i686
+#    - os: linux
+#      env:
+#        - MB_PYTHON_VERSION=2.7
+#        - UNICODE_WIDTH=16
+#    - os: osx
+#      language: generic
+#      env:
+#        - MB_PYTHON_VERSION=3.7
+#        - MB_PYTHON_OSX_VER=10.9
+#        - NP_BUILD_DEP=1.14.5
+#        - NP_TEST_DEP=1.14.5
+#    - os: osx
+#      language: generic
+#      env:
+#        - MB_PYTHON_VERSION=3.6
+#        - MB_PYTHON_OSX_VER=10.9
+    - os: osx
+      language: generic
       env:
         - MB_PYTHON_VERSION=3.5
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.5
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=3.4
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - PLAT=i686
-    - os: linux
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - UNICODE_WIDTH=16
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.7
-        - MB_PYTHON_OSX_VER=10.9
-        - NP_BUILD_DEP=1.14.5
-        - NP_TEST_DEP=1.14.5
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.6
-        - MB_PYTHON_OSX_VER=10.9
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=3.5
         - MB_PYTHON_OSX_VER=10.9
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.4
         - MB_PYTHON_OSX_VER=10.9
-    - os: osx
-      language: generic
-      env:
-        - MB_PYTHON_VERSION=2.7
-        - MB_PYTHON_OSX_VER=10.9
+#    - os: osx
+#      language: generic
+#      env:
+#        - MB_PYTHON_VERSION=2.7
+#        - MB_PYTHON_OSX_VER=10.9
   allow_failures:
     - os: linux
       env:
