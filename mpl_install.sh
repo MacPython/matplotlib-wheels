@@ -6,6 +6,11 @@ function mpl_build_install {
     check_var $SYS_CXX
     check_var $PYTHON_EXE
     cd matplotlib
+    mkdir build
+    cd build
+    wget https://downloads.sourceforge.net/project/freetype/freetype2/2.6.1/freetype-2.6.1.tar.gz
+    tar -xf freetype-2.6.1.tar.gz
+    cd ../
     cat << EOF > setup.cfg
 [directories]
 # 0verride the default basedir in setupext.py.
