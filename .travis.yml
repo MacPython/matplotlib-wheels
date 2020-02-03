@@ -138,6 +138,15 @@ before_install:
 install:
     # Maybe get and clean and patch source
     - clean_code $REPO_DIR $BUILD_COMMIT
+    - |
+
+      pushd matplotlib
+      mkdir build
+      pushd build
+      wget https://downloads.sourceforge.net/project/freetype/freetype2/2.6.1/freetype-2.6.1.tar.gz
+      tar -xf freetype-2.6.1.tar.gz
+      popd
+      popd
     - build_wheel $REPO_DIR $PLAT
     # Remove test images
     - pip install delocate
