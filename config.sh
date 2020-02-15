@@ -6,8 +6,16 @@ LOCAL_FT_COMMIT=5ad9b15
 
 # Test arguments
 NPROC=2
-PYTEST_ARGS="-ra --maxfail=1 --timeout=300 --durations=25 -n $NPROC"
+PYTEST_ARGS="-ra --maxfail=1000 --timeout=300 --durations=25 -n $NPROC"
 
+function pip_opts {
+    # Define extra pip arguments
+
+    # cryptography dropped 32 bit linux support. 
+    # the `--prefer-binary` flag encourages pip to use the latest wheel 
+    # that satisfies the requirements instead of the newest src
+    echo "--prefer-binary"
+}
 
 function pre_build {
     # Any stuff that you need to do before you start building the wheels
