@@ -22,8 +22,7 @@ env:
 language: python
 # Default Python version is usually 2.7
 python: 3.5
-sudo: required
-dist: trusty
+dist: bionic
 services: docker
 
 jobs:
