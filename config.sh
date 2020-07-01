@@ -27,10 +27,6 @@ function pre_build {
         # See https://github.com/matplotlib/matplotlib/issues/10649
         export LDFLAGS="-headerpad_max_install_names"
         build_new_zlib
-        local default_backend=macosx
-    else
-        # Tk not available by default on manylinux build container.
-        local default_backend=TkAgg
     fi
     build_jpeg
     build_libpng
