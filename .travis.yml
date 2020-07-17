@@ -8,8 +8,8 @@ env:
         - TEST_DEPENDS=
         - PLAT=x86_64
         - UNICODE_WIDTH=32
-        - NP_BUILD_DEP=1.11.3
-        - NP_TEST_DEP=1.11.3
+        - NP_BUILD_DEP=1.15.4
+        - NP_TEST_DEP=1.15.4
         - MANYLINUX_URL=https://5cf40426d9f06eb7461d-6fe47d9331aba7cd62fc36c7196769e4.ssl.cf2.rackcdn.com
         - WHEELHOUSE_UPLOADER_USERNAME=travis-worker
         # Following generated with
@@ -30,19 +30,13 @@ jobs:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=1.15.4
-        - NP_TEST_DEP=1.15.4
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=1.15.4
-        - NP_TEST_DEP=1.15.4
         - PLAT=i686
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.8
-        - NP_BUILD_DEP=1.15.4
-        - NP_TEST_DEP=1.15.4
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.6
@@ -55,15 +49,11 @@ jobs:
       env:
         - MB_PYTHON_VERSION=3.7
         - MB_PYTHON_OSX_VER=10.9
-        - NP_BUILD_DEP=1.15.4
-        - NP_TEST_DEP=1.15.4
     - os: osx
       language: generic
       env:
         - MB_PYTHON_VERSION=3.8
         - MB_PYTHON_OSX_VER=10.9
-        - NP_BUILD_DEP=1.15.4
-        - NP_TEST_DEP=1.15.4
         - MB_PYTHON_OSX_VER=10.9
         - MB_ML_VER=2010
     - os: osx
@@ -75,8 +65,6 @@ jobs:
     - os: linux
       env:
         - MB_PYTHON_VERSION=3.7
-        - NP_BUILD_DEP=1.15.4
-        - NP_TEST_DEP=1.15.4
         - PLAT=i686
     - os: linux
       env:
