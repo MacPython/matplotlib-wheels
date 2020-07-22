@@ -56,7 +56,7 @@ function run_tests {
 
     if [ -z "$IS_OSX" ]; then
         # Need fc-list for tests
-        sudo apt-get install fontconfig
+        apt-get install fontconfig
     fi
 
     echo "sanity checks"
