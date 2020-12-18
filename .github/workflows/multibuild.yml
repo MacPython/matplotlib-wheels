@@ -1,0 +1,123 @@
+name: build
+
+env:
+  REPO_DIR: matplotlib
+  BUILD_COMMIT: master
+  MACOSX_DEPLOYMENT_TARGET: 10.9
+  BUILD_DIR: ${{ github.workspace }}
+  MB_PYTHON_OSX_VER: 10.9
+  TEST_DEPENDS: "oldest-supported-numpy sphinx pytest pytest-timeout pytest-xdist pytest-faulthandler pytest-rerunfailures requests[security]"
+  BUILD_DEPENDS: "oldest-supported-numpy"
+  MB_ML_VER: 2010
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+  schedule:
+    # every Sunday at midnight, builds master and uploads to 
+    # https://anaconda.org/scipy-wheels-nightly/
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+    # manual trigger, uploads to https://anaconda.org/multibuild-wheels-staging
+    env:
+      BUILD_COMMIT: v0.3.13
+    
+
+jobs:
+  # TODO: add windows builds as a separate job
+  linux_mac:
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        # python-version: [3.7, 3.8, 3.9, "pypy-3.7"]
+        python-version: [3.7, 3.8, 3.9]
+        plat: ["x86_64"]
+        include:
+          - os: ubuntu-latest
+            plat: "i686"
+            python-version: 3.7
+          - os: ubuntu-latest
+            plat: "i686"
+            python-version: 3.8
+          - os: ubuntu-latest
+            plat: "i686"
+            python-version: 3.9
+    env:
+      MB_PYTHON_VERSION: ${{ matrix.python-version }}
+      PLAT: ${{ matrix.plat }}
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 0
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Set extra env
+      run: |
+        set -xe
+        if [ "macos-latest" == "${{ matrix.os }}" ]; then echo "TRAVIS_OS_NAME=osx" >> $GITHUB_ENV; else echo "TRAVIS_OS_NAME=${{ matrix.os }}" >> $GITHUB_ENV; fi
+        # Remove the '-' from pypy-
+        if [[ "$MB_PYTHON_VERSION" == pypy* ]]; then echo "MB_PYTHON_VERSION=pypy3.7-7.3.3" >> $GITHUB_ENV; fi
+        if [ "schedule" == "${{ github.event_name }}" ] || [ "master" == "$BUILD_COMMIT" ]; then
+            echo "TOKEN=${{ secrets.SCIPY_WHEELS_NIGHTLY_ACCESS }}" >> $GITHUB_ENV;
+            echo "ANACONDA_ORG=https://anaconda.org/scipy-wheels-nightly" >> $GITHUB_ENV;
+        else
+            echo "TOKEN=${{ secrets.MULTIBUILD_WHEELS_STAGING_ACCESS }}" >> $GITHUB_ENV;
+            echo "ANACONDA_ORG=https://anaconda.org/multibuild-wheels-staging" >> $GITHUB_ENV;
+        fi 
+        echo "TRAVIS_PYTHON_VERSION=$MV_PYTHON_VERSION" >> $GITHUB_ENV;
+        if [ "i686" == "${{ matrix.PLAT }}" ]; then echo "MB_ML_VER=1" >> $GITHUB_ENV; fi
+
+
+    - name: Print some Environment variable
+      run: |
+        echo "TRAVIS_OS_NAME: ${TRAVIS_OS_NAME}"
+        echo "ANACONDA_ORG: ${ANACONDA_ORG}"
+        echo "MB_PYTHON_VERSION: ${MB_PYTHON_VERSION}"
+        echo "TRAVIS_PYTHON_VERSION: ${TRAVIS_PYTHON_VERSION}"
+        echo "MB_ML_VER: ${MB_ML_VER}"
+    - name: Install VirtualEnv
+      run: |
+        python -m pip install --upgrade pip
+        pip install virtualenv
+    - name: Build and Install Wheels
+      run: |
+        set -ex
+        DOCKER_TEST_IMAGE=multibuild/xenial_${PLAT}
+        source multibuild/common_utils.sh
+        source multibuild/travis_steps.sh
+        echo "------ BEFORE INSTALL ---------"
+        before_install
+        echo "------ CLEAN CODE --------"
+        clean_code $REPO_DIR $BUILD_COMMIT
+        echo "------ BUILD --------"
+        build_wheel "$REPO_DIR" "$PLAT"
+        echo "------ REMOVE TEST IMAGES --------"
+        pip install delocate
+        python rm_test_images.py wheelhouse/*.whl
+        echo "------ TEST --------"
+        # increase number of open files allowed for tests, on OSX
+        # https://github.com/matplotlib/matplotlib/issues/3315
+        ulimit -n 4096
+        install_run $PLAT
+
+    - name: Upload wheels
+      if: env.TOKEN
+      run: |
+        set -ex
+        pip install git+https://github.com/Anaconda-Server/anaconda-client;
+        # The first -t option refers to the token, the second is the "type"
+        # option to the "upload" command
+        anaconda -t  ${TOKEN} upload \
+        --no-progress --force -u $ANACONDA_ORG \
+        ${BUILD_DIR}/wheelhouse/*.whl;
