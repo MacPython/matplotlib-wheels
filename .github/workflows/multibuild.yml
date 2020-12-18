@@ -2,6 +2,7 @@ name: build
 
 env:
   REPO_DIR: matplotlib
+  # Keep this in sync with the value in .travis.yml for arm64
   BUILD_COMMIT: master
   MACOSX_DEPLOYMENT_TARGET: 10.9
   BUILD_DIR: ${{ github.workspace }}
@@ -76,7 +77,10 @@ jobs:
             echo "ANACONDA_ORG=https://anaconda.org/multibuild-wheels-staging" >> $GITHUB_ENV;
         fi 
         echo "TRAVIS_PYTHON_VERSION=$MV_PYTHON_VERSION" >> $GITHUB_ENV;
-        if [ "i686" == "${{ matrix.PLAT }}" ]; then echo "MB_ML_VER=1" >> $GITHUB_ENV; fi
+        if [ "i686" == "${{ matrix.PLAT }}" ];
+          then echo "MB_ML_VER=1" >> $GITHUB_ENV;
+          else echo "DOCKER_TEST_IMAGE=multibuild/xenial_${PLAT}" >> $GITHUB_ENV;
+        fi
 
 
     - name: Print some Environment variable
@@ -86,14 +90,14 @@ jobs:
         echo "MB_PYTHON_VERSION: ${MB_PYTHON_VERSION}"
         echo "TRAVIS_PYTHON_VERSION: ${TRAVIS_PYTHON_VERSION}"
         echo "MB_ML_VER: ${MB_ML_VER}"
+        echo "DOCKER_TEST_IMAGE: ${DOCKER_TEST_IMAGE}"
     - name: Install VirtualEnv
       run: |
         python -m pip install --upgrade pip
         pip install virtualenv
     - name: Build and Install Wheels
       run: |
-        set -ex
-        DOCKER_TEST_IMAGE=multibuild/xenial_${PLAT}
+        # set -ex  # for debugging
         source multibuild/common_utils.sh
         source multibuild/travis_steps.sh
         echo "------ BEFORE INSTALL ---------"
