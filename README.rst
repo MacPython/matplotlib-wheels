@@ -1,3 +1,13 @@
+#########
+Archived!
+#########
+
+Multibuild served us well for serveral years, however have moved to using
+cibuildwheel running on GHA on matplotlib/matplotlib.
+
+This repo is archived for future refernce.
+
+
 ########################################
 Building and uploading matplotlib wheels
 ########################################
